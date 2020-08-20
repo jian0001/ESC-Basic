@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             else if (9==phoneNum.length()){
                 part1=(String) phoneNum.subSequence(0,3);
                 part2=(String) phoneNum.subSequence(4,8);
-                part3=(String) phoneNum.subSequence(9,phoneNum.length());
+                part3=(String) phoneNum.subSequence(8,phoneNum.length());
                 return part1+"-"+part2+"-"+part3;
             }
             else if(14<=phoneNum.length()){
