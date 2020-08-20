@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     private String changeToDial(String phoneNum) {
         while (phoneNum.contains("-")) {
             int num = phoneNum.indexOf("-");
-            phoneNum = (String) phoneNum.subSequence(0, num) + (String) phoneNum.subSequence(num + 1, phoneNum.length());
+            phoneNum = phoneNum.subSequence(0, num) + phoneNum.substring(num+1);
         }
         if(phoneNum.contains("*") || phoneNum.contains("#")) {
             return phoneNum;
@@ -146,14 +146,14 @@ public class MainActivity extends AppCompatActivity {
             String part3;
 
             if(4<=phoneNum.length()&&phoneNum.length()<=7){
-                part1 = (String) phoneNum.subSequence(0, 3);
-                part2 = (String) phoneNum.subSequence(3, phoneNum.length());
+                part1 = phoneNum.substring(0, 3);
+                part2 = phoneNum.substring(3);
                 return part1 + "-" + part2;
             }
             else if (8<=phoneNum.length()&&phoneNum.length()<=11){
-                part1 = (String) phoneNum.subSequence(0, 3);
-                part2 = (String) phoneNum.subSequence(3, 7);
-                part3 = (String) phoneNum.subSequence(7, phoneNum.length());
+                part1 = phoneNum.substring(0, 3);
+                part2 = phoneNum.substring(3, 7);
+                part3 = phoneNum.substring(7);
                 return part1 + "-" + part2 + "-" + part3;
             }
             else{
