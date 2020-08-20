@@ -132,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private String changeToDial(String phoneNum) {
+        while (phoneNum.contains("-")) {
+            int num = phoneNum.indexOf("-");
+            phoneNum = (String) phoneNum.subSequence(0, num) + (String) phoneNum.subSequence(num + 1, phoneNum.length());
+        }
         if(phoneNum.contains("*") || phoneNum.contains("#")) {
-            while (phoneNum.contains("-")) {
-                int num = phoneNum.indexOf("-");
-                phoneNum = (String) phoneNum.subSequence(0, num) + (String) phoneNum.subSequence(num + 1, phoneNum.length());
-            }
             return phoneNum;
         }
 
@@ -145,28 +145,16 @@ public class MainActivity extends AppCompatActivity {
             String part2;
             String part3;
 
-            if(4==phoneNum.length()){
-                if (phoneNum.indexOf("-",3)!=3) {
-                    part1 = (String) phoneNum.subSequence(0, 3);
-                    part2 = (String) phoneNum.subSequence(3, phoneNum.length());
-                    return part1 + "-" + part2;
-                }
-                return phoneNum;
+            if(4<=phoneNum.length()&&phoneNum.length()<=7){
+                part1 = (String) phoneNum.subSequence(0, 3);
+                part2 = (String) phoneNum.subSequence(3, phoneNum.length());
+                return part1 + "-" + part2;
             }
-            else if (9==phoneNum.length()){
-                if (phoneNum.indexOf("-",8)!=8) {
-                    part1 = (String) phoneNum.subSequence(0, 3);
-                    part2 = (String) phoneNum.subSequence(4, 8);
-                    part3 = (String) phoneNum.subSequence(8, phoneNum.length());
-                    return part1 + "-" + part2 + "-" + part3;
-                }
-                return phoneNum;
-            }
-            else if(14<=phoneNum.length()){
-                part1=(String) phoneNum.subSequence(0,3);
-                part2=(String) phoneNum.subSequence(4,8);
-                part3=(String) phoneNum.subSequence(9,phoneNum.length());
-                return part1+part2+part3;
+            else if (8<=phoneNum.length()&&phoneNum.length()<=11){
+                part1 = (String) phoneNum.subSequence(0, 3);
+                part2 = (String) phoneNum.subSequence(3, 7);
+                part3 = (String) phoneNum.subSequence(7, phoneNum.length());
+                return part1 + "-" + part2 + "-" + part3;
             }
             else{
                 return phoneNum;
