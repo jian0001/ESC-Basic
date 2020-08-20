@@ -146,15 +146,21 @@ public class MainActivity extends AppCompatActivity {
             String part3;
 
             if(4==phoneNum.length()){
-                part1= (String) phoneNum.subSequence(0, 3);
-                part2= (String) phoneNum.subSequence(3,phoneNum.length());
-                return part1+"-"+part2;
+                if (phoneNum.indexOf("-",3)!=3) {
+                    part1 = (String) phoneNum.subSequence(0, 3);
+                    part2 = (String) phoneNum.subSequence(3, phoneNum.length());
+                    return part1 + "-" + part2;
+                }
+                return phoneNum;
             }
             else if (9==phoneNum.length()){
-                part1=(String) phoneNum.subSequence(0,3);
-                part2=(String) phoneNum.subSequence(4,8);
-                part3=(String) phoneNum.subSequence(8,phoneNum.length());
-                return part1+"-"+part2+"-"+part3;
+                if (phoneNum.indexOf("-",8)!=8) {
+                    part1 = (String) phoneNum.subSequence(0, 3);
+                    part2 = (String) phoneNum.subSequence(4, 8);
+                    part3 = (String) phoneNum.subSequence(8, phoneNum.length());
+                    return part1 + "-" + part2 + "-" + part3;
+                }
+                return phoneNum;
             }
             else if(14<=phoneNum.length()){
                 part1=(String) phoneNum.subSequence(0,3);
