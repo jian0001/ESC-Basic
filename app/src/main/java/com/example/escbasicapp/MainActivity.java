@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton call;
     private ImageButton backspace;
 
+    //전화번호 검색
+    private TextView name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         contact = findViewById(R.id.main_ibtn_contact);
         phoneNum = findViewById(R.id.main_tv_phone);
 
+        //전화번호 검색
+       name = findViewById(R.id.main_tv_name);
+
         for (int i =0;i<dials.length;i++){
             dials[i]=findViewById(getResourceID("main_tv_"+i,"id",this));
 
@@ -93,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(MainActivity.this, AddEditActivity.class);
+                addIntent.putExtra("phone_num",phoneNum.getText().toString());
+                addIntent.putExtra("add_edit","add");
                 startActivity(addIntent);
             }
         });
@@ -142,6 +150,10 @@ public class MainActivity extends AppCompatActivity {
                         backspace.setVisibility(View.GONE);
                     }
                 }
+
+                //전화번호 검색
+                findPhone();
+
                 /*
                 if (phoneNum.getText().length() > 0) {
                     String formatPhoneNum = PhoneNumberUtils.formatNumber(
@@ -164,6 +176,9 @@ public class MainActivity extends AppCompatActivity {
                 message.setVisibility(View.GONE);
                 backspace.setVisibility(View.GONE);
 
+                //전화번호 검색
+                findPhone();
+
                 return true;
             }
         });
@@ -177,10 +192,43 @@ public class MainActivity extends AppCompatActivity {
 
                 message.setVisibility(View.VISIBLE);
                 backspace.setVisibility(View.VISIBLE);
+
+                //전화번호 검색
+                findPhone();
+
                 //String formatPhoneNum = PhoneNumberUtils.formatNumber(phoneNum.getText() + input, Locale.getDefault().getCountry());
                 //phoneNum.setText(formatPhoneNum);
             }
         });
+    }
+
+    //전화번호 검색
+    private void findPhone(){
+        int num =0; //일치하는 번호가 몇개인지 나타나는 변수
+        ArrayList<String> list = new ArrayList<String>(); //일치하는 사람 중복일 때 그 사람들에 대한 정보가 담김.
+
+        String find = phoneNum.getText().toString().replaceAll("-","");
+
+        for (int i = 0; i < DummyData.contacts.size(); i++) {
+            if (DummyData.contacts.get(i).getPhone().replaceAll("-","").contains(find)){
+                num++;
+                list.add(DummyData.contacts.get(i).getName());
+            }
+        }
+
+        if(num ==0){ //일치하는 번호가 없다면
+            name.setText("");
+        }
+        else if(num ==1){ //일치하는 번호가 1개라면
+            name.setText(list.get(0));
+        }
+        else if(num ==2){ // 일치하는 번호가 2개라면
+            name.setText(list.get(0)+ " "+list.get(1));
+        }
+        else{ // 일치하는 번호가 3개 이상
+            name.setText("");
+        }
+        //name.setText(DummyData.contacts.get(index).getName());
     }
 
     private  int getResourceID(final String resName, final String resType, final Context ctx){
